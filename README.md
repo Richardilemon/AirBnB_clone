@@ -1,2 +1,2 @@
 # AirBnB_clone
-An AirBnB clone project
+An ALX AirBnB clone project
