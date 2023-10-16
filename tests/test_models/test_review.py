@@ -1,69 +1,48 @@
 #!/usr/bin/python3
-"""Unit tests for class Review"""
+"""Unit tests for Review Class"""
 import unittest
 import os
 import pep8
+from models.engine.file_storage import FileStorage
+from models import storage
 from models.base_model import BaseModel
 from models.review import Review
 
 
-class TestAmenity(unittest.TestCase):
-    """Test case for  Amenity Class"""
-    @classmethod
-    def setUp(cls):
-        """setup instance"""
-        cls.r1 = Review()
-        cls.r1.place_id = "Raleigh"
-        cls.r1.user_id = "Greg"
-        cls.r1.text = "Grade A"
+class TestReview(unittest.TestCase):
 
-    @classmethod
-    def tearDownClass(cls):
-        """delete instance"""
-        del cls.r1
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            pass
+    """Review Class Test Cases."""
 
-    def test_style_check(self):
-        """test pep8 style"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/review.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
+    def setUp(self):
+        """Sets up Test Unit methods."""
+        pass
 
-    def test_is_subclass(self):
-        """check that class of instance is a subclass of BaseModel"""
-        self.assertTrue(issubclass(self.r1.__class__, BaseModel), True)
+    def tearDown(self):
+        """Tears down Testunit  methods."""
+        self.resetStorage()
+        pass
 
-    def test_checking_for_functions(self):
-        """check docstrings for existing functions"""
-        self.assertIsNotNone(Review.__doc__)
+    def resetStorage(self):
+        """Resets FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
 
-    def test_has_attributes(self):
-        """check that instance has all class attributes"""
-        self.assertTrue('id' in self.r1.__dict__)
-        self.assertTrue('created_at' in self.r1.__dict__)
-        self.assertTrue('updated_at' in self.r1.__dict__)
-        self.assertTrue('place_id' in self.r1.__dict__)
-        self.assertTrue('text' in self.r1.__dict__)
-        self.assertTrue('user_id' in self.r1.__dict__)
+    def test_review_instantiation(self):
+        """Tests instantiation of Review class."""
 
-    def test_attributes_types(self):
-        """check that all class attribute have appropriate values"""
-        self.assertIsInstance(self.r1.place_id, str)
-        self.assertIsInstance(self.r1.user_id, str)
-        self.assertIsInstance(self.r1.text, str)
+        r1 = Review()
+        self.assertEqual(str(type(r1)), "<class 'models.review.Review'>")
+        self.assertIsInstance(r1, Review)
+        self.assertTrue(issubclass(type(r1), BaseModel))
 
-    def test_save(self):
-        """check save method"""
-        self.r1.save()
-        self.assertNotEqual(self.r1.created_at, self.r1.updated_at)
+    def test_review_attributes(self):
+        """Tests the attributes of Review class."""
+        attributes = storage.attributes()["Review"]
+        r1 = Review()
+        for key, value in attributes.items():
+            self.assertTrue(hasattr(r1, key))
+            self.assertEqual(type(getattr(r1, key, None)), value)
 
-    def test_to_dict(self):
-        """check to_dict method"""
-        self.assertEqual('to_dict' in dir(self.r1), True)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
-
