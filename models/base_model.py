@@ -14,6 +14,10 @@ class BaseModel():
     """
     
     def __init__(self, *args, **kwargs):
+        """
+        instatiates an object with it's
+        attributes
+        """
         if len(kwargs) > 0:
             for key, value in kwargs.items():
                 if key == '__class__':
@@ -40,6 +44,10 @@ class BaseModel():
         
         
     def save(self):
+        """
+        updates the public instance attribute
+        at the current datetime
+        """
         self.updated_at = datetime.now()
         models.storage.save()
         
