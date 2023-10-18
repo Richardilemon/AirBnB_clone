@@ -28,14 +28,14 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
     
     
-    def to_quit(self, arg):
+    def do_quit(self, arg):
         """
         To exit the program with 'quit'.
         """
         return True
     
     
-    def to_EOF(self, line):
+    def do_EOF(self, line):
         """
         EOF to catch errors.
         """
@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
         return True
     
     
-    def to_help(self, arg):
+    def do_help(self, arg):
         """
         To get help on a command.
         """
@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
     
     
     
-    def to_create(self, arg):
+    def do_create(self, arg):
         """
         Creates a new instance.
         """
@@ -71,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_obj.id)
 
 
-    def to_show(self, arg):
+    def do_show(self, arg):
         """
         Prints string representation of an instance.
         """
@@ -88,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
         print(req_instance)
 
 
-    def to_destroy(self, arg):
+    def do_destroy(self, arg):
         """
         Deletes an instance.
         """
@@ -107,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 
-    def to_all(self, arg):
+    def do_all(self, arg):
         """
         Prints all string representation.
         """
@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
 
-    def to_update(self, arg: str):
+    def do_update(self, arg: str):
         """
         Updates an instance.
         """
